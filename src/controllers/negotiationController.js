@@ -56,27 +56,37 @@ const negotiationController = {
     async moveFunnel(req, res) {
         const { id } = req.params;
         const { funnel_id } = req.body;
-        try {
 
-            // Checa se existe o funil
-            const [funnelRows] = await pool.query("SELECT name FROM funnels WHERE id = ?", [funnel_id]);
+        try {
+            // Checa se o funil existe
+            const [funnelRows] = await pool.query("SELECT nome FROM funis WHERE id = ?", [funnel_id]);
             if (funnelRows.length === 0) {
                 return res.status(404).json({ message: "Funil não encontrado." });
             }
 
-            // Definindo o novo status
-            const funnelName = funnelRows[0].name.toLowerCase();
-            const newStatus = funnelName === "win" ? "win" : funnelName === "lost" ? "lost" : "in_progress";
+            // Define o novo status com base no nome do funil
+            const nomeFunil = funnelRows[0].nome.toLowerCase();
+            let novoStatus = "em negociação"; // Status padrão
 
-            // Atualiza a negociação
+            if (nomeFunil === "ganhas") {
+                novoStatus = "ganho";
+            } else if (nomeFunil === "perdidas") {
+                novoStatus = "perdida";
+            }
+
+            // Atualiza a negociação com o novo funil e status
             const [result] = await pool.query(
-                "UPDATE negotiations SET funnel_id = ?, status = ? WHERE id = ?",
-                [funnel_id, newStatus, id]
+                "UPDATE negociacoes SET funil_id = ?, status = ? WHERE id = ?",
+                [funnel_id, novoStatus, id]
             );
+
+            // Verifica se a negociação foi atualizada
             if (result.affectedRows === 0) {
                 return res.status(404).json({ message: "Negociação não encontrada." });
             }
-            res.json({ id, funnel_id, status: newStatus });
+
+            // Retorna a negociação atualizada
+            res.json({ id, funil_id, status: novoStatus });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
