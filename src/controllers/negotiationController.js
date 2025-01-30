@@ -57,11 +57,16 @@ const negotiationController = {
         const { id } = req.params;
         const { funnel_id } = req.body;
         try {
+
             // Checa se existe o funil
             const [funnelRows] = await pool.query("SELECT name FROM funnels WHERE id = ?", [funnel_id]);
             if (funnelRows.length === 0) {
-                return res.status(404).json({ message: "Funnel not found" });
+                return res.status(404).json({ message: "Funil não encontrado." });
             }
+
+            // Definindo o novo status
+            const funnelName = funnelRows[0].name.toLowerCase();
+            const newStatus = funnelName === "win" ? "win" : funnelName === "lost" ? "lost" : "in_progress";
 
             res.json({ id, funnel_id, status: newStatus });
         } catch (error) {
