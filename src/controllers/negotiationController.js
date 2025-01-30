@@ -68,6 +68,14 @@ const negotiationController = {
             const funnelName = funnelRows[0].name.toLowerCase();
             const newStatus = funnelName === "win" ? "win" : funnelName === "lost" ? "lost" : "in_progress";
 
+            // Atualiza a negociação
+            const [result] = await pool.query(
+                "UPDATE negotiations SET funnel_id = ?, status = ? WHERE id = ?",
+                [funnel_id, newStatus, id]
+            );
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Negociação não encontrada." });
+            }
             res.json({ id, funnel_id, status: newStatus });
         } catch (error) {
             res.status(500).json({ error: error.message });
