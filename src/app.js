@@ -1,19 +1,15 @@
 const express = require("express");
+const cors = require("cors");
+const routes = require("./routes");
+
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-// Rotas
-app.get("/", (req, res) => {
-  res.send("API");
-});
-
-// Sincroniza o banco de dados
-sequelize.sync({ force: true }).then(() => {
-    console.log("Banco de dados sincronizado.");
-  });
+app.use("/api", routes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`API rodando na porta ${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });

@@ -1,6 +1,6 @@
--- Criação do banco de dados
-CREATE DATABASE IF NOT EXISTS crm_hubify;
-USE crm_hubify;
+-- Criação do banco de dados (nome da sua preferência, no caso da minha hospedagem, o nome foi esse abaixo)
+CREATE DATABASE IF NOT EXISTS u244230895_apihubify;
+USE u244230895_apihubify;
 
 CREATE TABLE IF NOT EXISTS contacts (
     id INT AUTO_INCREMENT PRIMARY KEY,
