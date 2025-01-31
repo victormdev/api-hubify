@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS funnels (
 CREATE TABLE IF NOT EXISTS negotiations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    status ENUM('in_progress', 'lost', 'win') NOT NULL DEFAULT 'in_progress',
+    status ENUM('Em negociação', 'Perdida', 'Ganha') NOT NULL DEFAULT 'Em negociação',
     contact_id INT NOT NULL,
     funnel_id INT NOT NULL,
     value DECIMAL(10, 2),

@@ -8,7 +8,7 @@ const negotiationController = {
         try {
             const [result] = await pool.query(
                 "INSERT INTO negotiations (title, status, contact_id, funnel_id, value) VALUES (?, ?, ?, ?, ?)",
-                [title, "in_progress", contact_id, funnel_id, value]
+                [title, "Em negociação", contact_id, funnel_id, value]
             );
             res.status(201).json({ id: result.insertId, title, contact_id, funnel_id, value });
         } catch (error) {
@@ -66,17 +66,17 @@ const negotiationController = {
 
             // Define o novo status com base no nome do funil
             const nomeFunil = funnelRows[0].nome.toLowerCase();
-            let novoStatus = "em negociação"; // Status padrão
+            let novoStatus = "Em negociação"; // Status padrão
 
-            if (nomeFunil === "ganhas") {
-                novoStatus = "ganho";
-            } else if (nomeFunil === "perdidas") {
-                novoStatus = "perdida";
+            if (nomeFunil === "Ganhas") {
+                novoStatus = "Ganha";
+            } else if (nomeFunil === "Perdidas") {
+                novoStatus = "Perdida";
             }
 
             // Atualiza a negociação com o novo funil e status
             const [result] = await pool.query(
-                "UPDATE negociacoes SET funil_id = ?, status = ? WHERE id = ?",
+                "UPDATE negotiations SET funil_id = ?, status = ? WHERE id = ?",
                 [funnel_id, novoStatus, id]
             );
 
