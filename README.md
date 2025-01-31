@@ -23,7 +23,7 @@ API para gerenciamento de contatos e negociações, com funcionalidades para cri
 
 - **Node.js**: Ambiente de execução JavaScript.
 - **Express**: Framework para construção da API.
-- **MySQL**: Banco de dados. * schema localizado em /src/database/schema.sql *
+- **MySQL**: Banco de dados.
 - **Postman**: Ferramenta para testar as requisições da API.
 
 ---
@@ -33,7 +33,7 @@ API para gerenciamento de contatos e negociações, com funcionalidades para cri
 ### **Pré-requisitos**
 
 - Node.js (v18 ou superior)
-- MySQL (atualmente hospedado no phpMyAdmin da Hostinger)
+- MySQL (atualmente hospedado no phpMyAdmin da Hostinger e schema localizado em **/src/database/schema.sql**)
 - Postman (opcional, para testar as requisições)
 
 ### **Passos para configuração**
